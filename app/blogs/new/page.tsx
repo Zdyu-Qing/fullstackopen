@@ -1,6 +1,6 @@
 import { createBlog } from '@/app/actions/blogs';
 
-export default function newBlog() {
+export default function newBlogPage() {
   return (
     <div>
       <h1>Create a new blog</h1>

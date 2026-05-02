@@ -23,7 +23,7 @@ const blogs = [
 ];
 
 export const getBlogs = () => {
-  return blogs;
+  return blogs.sort((a, b) => b.likes - a.likes);
 };
 
 export const addBlog = (title: string, author: string, url: string) => {
@@ -35,4 +35,15 @@ export const addBlog = (title: string, author: string, url: string) => {
     url,
     likes: 0,
   });
+};
+
+export const getBlogById = (id: number) => {
+  return blogs.find((blog) => blog.id === id);
+};
+
+export const addLike = (id: number) => {
+  const blog = getBlogById(id);
+  if (blog) {
+    blog.likes++;
+  }
 };
