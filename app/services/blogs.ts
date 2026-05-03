@@ -1,49 +1,34 @@
-const blogs = [
-  {
-    id: 1,
-    title: 'Minimal Blog Post',
-    author: 'Alice',
-    url: 'https://example.com/blog-1',
-    likes: 5,
-  },
-  {
-    id: 2,
-    title: 'Another Post',
-    author: 'Bob',
-    url: 'https://example.com/blog-2',
-    likes: 2,
-  },
-  {
-    id: 3,
-    title: 'Third Entry',
-    author: 'Charlie',
-    url: 'https://example.com/blog-3',
-    likes: 0,
-  },
-];
+import { db } from '@/app/db';
+import { blogs } from '@/db/schema';
+import { desc, eq, ilike } from 'drizzle-orm';
 
-export const getBlogs = () => {
-  return blogs.sort((a, b) => b.likes - a.likes);
-};
-
-export const addBlog = (title: string, author: string, url: string) => {
-  const id = Math.max(...blogs.map((blog) => blog.id)) + 1;
-  blogs.push({
-    id,
-    title,
-    author,
-    url,
-    likes: 0,
+export const getBlogs = async (titleFilter: string) => {
+  return await db.query.blogs.findMany({
+    orderBy: [desc(blogs.likes)],
+    where: ilike(blogs.title, `%${titleFilter}%`),
   });
 };
 
-export const getBlogById = (id: number) => {
-  return blogs.find((blog) => blog.id === id);
+export const addBlog = async (title: string, author: string, url: string) => {
+  await db.insert(blogs).values({
+    title,
+    author,
+    url,
+  });
 };
 
-export const addLike = (id: number) => {
-  const blog = getBlogById(id);
+export const getBlogById = async (id: number) => {
+  return await db.query.blogs.findFirst({ where: eq(blogs.id, id) });
+};
+
+export const addLike = async (id: number) => {
+  const blog = await getBlogById(id);
   if (blog) {
-    blog.likes++;
+    await db
+      .update(blogs)
+      .set({
+        likes: blog.likes + 1,
+      })
+      .where(eq(blogs.id, id));
   }
 };

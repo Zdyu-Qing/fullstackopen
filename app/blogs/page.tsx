@@ -7,13 +7,7 @@ export default async function BlogsPage({
   searchParams: Promise<{ filter?: string }>;
 }) {
   const { filter } = await searchParams;
-
-  const blogs = getBlogs();
-  const filteredBlogs = filter
-    ? blogs.filter((blog) =>
-        blog.title.toLocaleLowerCase().includes(filter.toLocaleLowerCase()),
-      )
-    : blogs;
+  const blogs = await getBlogs(filter ?? '');
 
   return (
     <div>
@@ -24,7 +18,7 @@ export default async function BlogsPage({
           <button type="submit">Search</button>
         </form>
       </div>
-      {filteredBlogs.map((blog) => (
+      {blogs.map((blog) => (
         <div key={blog.id}>
           <Link href={`/blogs/${blog.id}`}>
             <h2>{blog.title}</h2>
