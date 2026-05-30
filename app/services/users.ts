@@ -14,3 +14,11 @@ export const getUserWithBlogs = async (username: string) => {
     with: { blogs: true },
   });
 };
+
+export const usernameExists = async (username: string) => {
+  const user = await db.query.users.findFirst({
+    where: eq(users.username, username),
+  });
+
+  return user !== undefined;
+};
