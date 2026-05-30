@@ -22,6 +22,13 @@
       "when": 1780145097575,
       "tag": "0002_make_blogs_table_userid_mandatory",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1780155355877,
+      "tag": "0003_add_password_hash_to_users_table",
+      "breakpoints": true
     }
   ]
 }
