@@ -8,6 +8,20 @@
       "when": 1777810314185,
       "tag": "0000_create_blogs_table",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1780143030430,
+      "tag": "0001_create_users_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1780145097575,
+      "tag": "0002_make_blogs_table_userid_mandatory",
+      "breakpoints": true
     }
   ]
 }
