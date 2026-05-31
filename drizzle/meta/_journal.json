@@ -36,6 +36,20 @@
       "when": 1780237621781,
       "tag": "0004_add_api_token_to_users_table",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1780239197221,
+      "tag": "0005_create_reading_list_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1780241106836,
+      "tag": "0006_make_reading_list_user_blog_unique",
+      "breakpoints": true
     }
   ]
 }

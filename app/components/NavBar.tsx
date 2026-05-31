@@ -32,7 +32,6 @@ export default function NavBar() {
           <NavLink href="/me" active={pathname === '/me'}>
             me
           </NavLink>
-          <em>{session.user?.name} logged in</em>
           <button
             onClick={() => signOut({ redirectTo: '/login' })}
             className="bg-red-600"

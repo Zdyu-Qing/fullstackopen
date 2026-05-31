@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { addBlog, addLike } from '@/app/services/blogs';
 import { auth } from '@/auth';
+import { addBlogToReadingList } from '@/app/services/reading-list';
 
 type FormValues = {
   title: string;
@@ -42,7 +43,8 @@ export const createBlog = async (
     return { errors, values: { title, author, url }, success: false };
   }
 
-  await addBlog(title, author, url);
+  const addedBlog = await addBlog(title, author, url);
+  await addBlogToReadingList(addedBlog[0].id);
 
   revalidatePath('/blogs');
   return {

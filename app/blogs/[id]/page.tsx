@@ -1,5 +1,7 @@
 import { incrementLikes } from '@/app/actions/blogs';
+import { addBlogToReadingListAction } from '@/app/actions/reading-list';
 import { getBlogById } from '@/app/services/blogs';
+import { getCurrentUserReadingList } from '@/app/services/reading-list';
 import { notFound } from 'next/navigation';
 
 export default async function BlogPage({
@@ -9,27 +11,40 @@ export default async function BlogPage({
 }) {
   const { id } = await params;
   const blog = await getBlogById(Number(id));
+  const readingList = await getCurrentUserReadingList();
 
   if (!blog) {
     notFound();
   }
 
+  // readingList is null when the user is not authenticated
+  const showAddToReadingListButton =
+    readingList !== null
+      ? !readingList.some((v) => v.blogId === blog.id)
+      : false;
+
   return (
     <div className="card">
       <h1>{blog.title}</h1>
-      <ul>
-        <li>author: {blog.author}</li>
-        <li>
-          url: <a href={blog.url}>{blog.url}</a>
-        </li>
-        <li>
-          likes: {blog.likes}
-          <form action={incrementLikes}>
+      <p className="text-gray-600 mt-0">by {blog.author}</p>
+      <div className="flex flex-row items-center my-3 gap-3">
+        <p className="m-0">likes: {blog.likes}</p>
+        <form className="w-fit" action={incrementLikes}>
+          <input name="id" value={blog.id} hidden readOnly />
+          <button type="submit">like</button>
+        </form>
+        {showAddToReadingListButton && (
+          <form className="w-fit" action={addBlogToReadingListAction}>
             <input name="id" value={blog.id} hidden readOnly />
-            <button type="submit">Like</button>
+            <button className="bg-green-600" type="submit">
+              add to reading list
+            </button>
           </form>
-        </li>
-      </ul>
+        )}
+      </div>
+      <a href={blog.url} className="link">
+        {blog.url}
+      </a>
     </div>
   );
 }

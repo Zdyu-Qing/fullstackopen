@@ -45,3 +45,21 @@ export const getUserWithBlogsByApiToken = async (apiToken: string) => {
     with: { blogs: true },
   });
 };
+
+export const getCurrentUserWithReadingList = async () => {
+  const user = await getCurrentUser();
+  if (!user) {
+    return undefined;
+  }
+
+  return await db.query.users.findFirst({
+    where: eq(users.id, user.id),
+    with: {
+      readingList: {
+        with: {
+          blog: true,
+        },
+      },
+    },
+  });
+};
