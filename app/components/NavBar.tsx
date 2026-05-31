@@ -1,33 +1,50 @@
 'use client';
 
-import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
+import NavLink from '@/app/components/NavLink';
+import { usePathname } from 'next/navigation';
 
 export default function NavBar() {
   const { data: session } = useSession();
+  const pathname = usePathname();
 
   return (
-    <nav>
+    <nav className="bg-gray-800 text-white px-6 py-3 flex items-center gap-4 mb-4">
       {session ? (
         <>
-          <Link href="/">home</Link>
-          {' | '}
-          <Link href="/users">users</Link>
-          {' | '}
-          <Link href="/blogs">blogs</Link>
-          {' | '}
-          <Link href="/blogs/new">create new</Link>
-          {' | '}
-          <em>{session.user?.name} logged in</em>{' '}
-          <button onClick={() => signOut({ redirectTo: '/login' })}>
+          <div className="mr-auto">
+            <NavLink href="/" active={pathname === '/'}>
+              home
+            </NavLink>
+          </div>
+          <NavLink
+            href="/blogs"
+            active={pathname.includes('/blogs') && pathname !== '/blogs/new'}
+          >
+            blogs
+          </NavLink>
+          <NavLink href="/users" active={pathname.includes('/users')}>
+            users
+          </NavLink>
+          <NavLink href="/blogs/new" active={pathname === '/blogs/new'}>
+            create new
+          </NavLink>
+          <em>{session.user?.name} logged in</em>
+          <button
+            onClick={() => signOut({ redirectTo: '/login' })}
+            className="bg-red-600"
+          >
             logout
           </button>
         </>
       ) : (
         <>
-          <Link href="/login">login</Link>
-          {' | '}
-          <Link href="/register">register</Link>
+          <NavLink href="/login" active={pathname === '/login'}>
+            login
+          </NavLink>
+          <NavLink href="/register" active={pathname === '/register'}>
+            register
+          </NavLink>
         </>
       )}
     </nav>

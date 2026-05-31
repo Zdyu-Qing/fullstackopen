@@ -1,4 +1,7 @@
+import './globals.css';
 import NavBar from '@/app/components/NavBar';
+import Notification from '@/app/components/Notification';
+import { NotificationProvider } from '@/app/components/NotificationContext';
 import AuthSessionProvider from '@/app/components/SessionProvider';
 
 export default function RootLayout({
@@ -8,10 +11,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="min-h-screen bg-background text-foreground">
         <AuthSessionProvider>
-          <NavBar />
-          {children}
+          <NotificationProvider>
+            <NavBar />
+            <Notification />
+            <div className="flex flex-col items-center">{children}</div>
+          </NotificationProvider>
         </AuthSessionProvider>
       </body>
     </html>

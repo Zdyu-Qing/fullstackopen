@@ -1,16 +1,28 @@
 'use client';
 
 import { createBlog } from '@/app/actions/blogs';
-import { useActionState } from 'react';
+import { useNotification } from '@/app/components/NotificationContext';
+import { useRouter } from 'next/navigation';
+import { useActionState, useEffect } from 'react';
 
 export default function NewBlogPage() {
   const [state, formAction] = useActionState(createBlog, {
     errors: {},
     values: { author: '', title: '', url: '' },
+    success: false,
   });
+  const { showNotification } = useNotification();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state.success) {
+      showNotification('Blog created!');
+      router.push('/blogs');
+    }
+  }, [state, showNotification, router]);
 
   return (
-    <div>
+    <div className="card items-center">
       <h1>Create a new blog</h1>
       <form action={formAction}>
         <div>
@@ -24,7 +36,7 @@ export default function NewBlogPage() {
             />
           </label>
           {state.errors.title && (
-            <p style={{ color: 'red' }}>{state.errors.title}</p>
+            <p className="text-red-500">{state.errors.title}</p>
           )}
         </div>
         <div>
@@ -38,7 +50,7 @@ export default function NewBlogPage() {
             />
           </label>
           {state.errors.author && (
-            <p style={{ color: 'red' }}>{state.errors.author}</p>
+            <p className="text-red-500">{state.errors.author}</p>
           )}
         </div>
         <div>
@@ -52,7 +64,7 @@ export default function NewBlogPage() {
             />
           </label>
           {state.errors.url && (
-            <p style={{ color: 'red' }}>{state.errors.url}</p>
+            <p className="text-red-500">{state.errors.url}</p>
           )}
         </div>
         <button type="submit">Create</button>

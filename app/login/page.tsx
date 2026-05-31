@@ -27,9 +27,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div className="card items-center">
+      <h1>Login</h1>
+      {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>

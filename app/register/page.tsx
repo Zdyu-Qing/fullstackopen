@@ -10,8 +10,8 @@ export default function RegisterPage() {
   });
 
   return (
-    <div>
-      <h2>Register</h2>
+    <div className="card items-center">
+      <h1>Register</h1>
       <form action={formAction}>
         <div>
           <label>
@@ -24,7 +24,7 @@ export default function RegisterPage() {
             />
           </label>
           {state.errors.username && (
-            <p style={{ color: 'red' }}>{state.errors.username}</p>
+            <p className="text-red-500">{state.errors.username}</p>
           )}
         </div>
         <div>
@@ -49,7 +49,7 @@ export default function RegisterPage() {
             />
           </label>
           {state.errors.password && (
-            <p style={{ color: 'red' }}>{state.errors.password}</p>
+            <p className="text-red-500">{state.errors.password}</p>
           )}
         </div>
         <div>
@@ -63,7 +63,7 @@ export default function RegisterPage() {
             />
           </label>
           {state.errors.passwordConfirm && (
-            <p style={{ color: 'red' }}>{state.errors.passwordConfirm}</p>
+            <p className="text-red-500">{state.errors.passwordConfirm}</p>
           )}
         </div>
         <button type="submit">Register</button>

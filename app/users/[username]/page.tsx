@@ -15,7 +15,7 @@ export default async function UserPage({
   }
 
   return (
-    <div>
+    <div className="card">
       <h1>{user.name}</h1>
       <p>Username: {user.username}</p>
 
@@ -23,7 +23,9 @@ export default async function UserPage({
       <ul>
         {user.blogs.map((blog) => (
           <li key={blog.id}>
-            <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
+            <Link href={`/blogs/${blog.id}`} className="link">
+              {blog.title}
+            </Link>
           </li>
         ))}
       </ul>

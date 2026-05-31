@@ -6,17 +6,17 @@ import { db } from '@/db';
 import { users } from '@/db/schema';
 import { usernameExists } from '@/app/services/users';
 
-type ValueFields = {
+type FormValues = {
   username: string;
   name: string;
   password: string;
   passwordConfirm: string;
 };
 
-type ValidationError = Partial<Omit<ValueFields, 'name'>>;
+type ValidationError = Partial<Omit<FormValues, 'name'>>;
 
 export const registerUser = async (
-  prevState: { errors: ValidationError; values: ValueFields },
+  prevState: { errors: ValidationError; values: FormValues },
   formData: FormData,
 ) => {
   const errors: ValidationError = {};

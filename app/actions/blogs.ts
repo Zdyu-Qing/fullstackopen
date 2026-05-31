@@ -5,16 +5,16 @@ import { revalidatePath } from 'next/cache';
 import { addBlog, addLike } from '@/app/services/blogs';
 import { auth } from '@/auth';
 
-type ValueFields = {
+type FormValues = {
   title: string;
   author: string;
   url: string;
 };
 
-type ValidationError = Partial<ValueFields>;
+type ValidationError = Partial<FormValues>;
 
 export const createBlog = async (
-  prevState: { errors: ValidationError; values: ValueFields },
+  prevState: { errors: ValidationError; values: FormValues },
   formData: FormData,
 ) => {
   const session = await auth();
@@ -39,12 +39,17 @@ export const createBlog = async (
   }
 
   if (Object.keys(errors).length > 0) {
-    return { errors, values: { title, author, url } };
+    return { errors, values: { title, author, url }, success: false };
   }
 
   await addBlog(title, author, url);
+
   revalidatePath('/blogs');
-  redirect('/blogs');
+  return {
+    errors: {},
+    values: { author: '', title: '', url: '' },
+    success: true,
+  };
 };
 
 export const incrementLikes = async (formData: FormData) => {

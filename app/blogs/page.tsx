@@ -10,24 +10,27 @@ export default async function BlogsPage({
   const blogs = await getBlogs(filter ?? '');
 
   return (
-    <div>
+    <div className="card">
       <h1>Blogs</h1>
       <div>
-        <form method="GET" action="/blogs">
+        <form method="GET" action="/blogs" className="gap-1">
           <input name="filter" placeholder="Search blogs by title" />
           <button type="submit">Search</button>
         </form>
       </div>
       {blogs.map((blog) => (
         <div key={blog.id}>
-          <Link href={`/blogs/${blog.id}`}>
+          <Link href={`/blogs/${blog.id}`} className="link">
             <h2>{blog.title}</h2>
           </Link>
           <ul>
             <li>id: {blog.id}</li>
             <li>author: {blog.author}</li>
             <li>
-              url: <a href={blog.url}>{blog.url}</a>
+              url:{' '}
+              <a href={blog.url} className="link">
+                {blog.url}
+              </a>
             </li>
             <li>likes: {blog.likes}</li>
           </ul>
