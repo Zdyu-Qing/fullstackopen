@@ -32,7 +32,7 @@ body {
     @apply list-disc pl-6;
   }
   button {
-    @apply bg-blue-500 p-1 rounded-md text-white cursor-pointer;
+    @apply bg-blue-500 py-1 px-3 rounded-md text-white cursor-pointer;
   }
   label {
     @apply flex flex-col;

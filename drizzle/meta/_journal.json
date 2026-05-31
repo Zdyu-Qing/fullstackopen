@@ -29,6 +29,13 @@
       "when": 1780155355877,
       "tag": "0003_add_password_hash_to_users_table",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1780237621781,
+      "tag": "0004_add_api_token_to_users_table",
+      "breakpoints": true
     }
   ]
 }

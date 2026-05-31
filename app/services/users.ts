@@ -1,3 +1,4 @@
+import { getCurrentUser } from '@/app/services/session';
 import { db } from '@/db';
 import { users } from '@/db/schema';
 import { eq } from 'drizzle-orm';
@@ -21,4 +22,26 @@ export const usernameExists = async (username: string) => {
   });
 
   return user !== undefined;
+};
+
+export const updateApiToken = async () => {
+  const user = await getCurrentUser();
+  if (!user) {
+    throw new Error('Not logged in');
+  }
+
+  const newApiToken = crypto.randomUUID();
+  await db
+    .update(users)
+    .set({
+      apiToken: newApiToken,
+    })
+    .where(eq(users.id, user.id));
+};
+
+export const getUserWithBlogsByApiToken = async (apiToken: string) => {
+  return await db.query.users.findFirst({
+    where: eq(users.apiToken, apiToken),
+    with: { blogs: true },
+  });
 };

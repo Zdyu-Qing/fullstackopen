@@ -29,6 +29,9 @@ export default function NavBar() {
           <NavLink href="/blogs/new" active={pathname === '/blogs/new'}>
             create new
           </NavLink>
+          <NavLink href="/me" active={pathname === '/me'}>
+            me
+          </NavLink>
           <em>{session.user?.name} logged in</em>
           <button
             onClick={() => signOut({ redirectTo: '/login' })}

@@ -4,7 +4,8 @@ import { redirect } from 'next/navigation';
 import bcrypt from 'bcryptjs';
 import { db } from '@/db';
 import { users } from '@/db/schema';
-import { usernameExists } from '@/app/services/users';
+import { updateApiToken, usernameExists } from '@/app/services/users';
+import { revalidatePath } from 'next/cache';
 
 type FormValues = {
   username: string;
@@ -49,4 +50,9 @@ export const registerUser = async (
   await db.insert(users).values({ username, name, passwordHash });
 
   redirect('/login');
+};
+
+export const generateNewApiToken = async () => {
+  await updateApiToken();
+  revalidatePath('/me');
 };
