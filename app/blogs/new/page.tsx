@@ -55,7 +55,7 @@ export default function NewBlogPage() {
         </div>
         <div>
           <label>
-            Url
+            URL
             <input
               type="url"
               name="url"
@@ -67,7 +67,9 @@ export default function NewBlogPage() {
             <p className="text-red-500">{state.errors.url}</p>
           )}
         </div>
-        <button type="submit">Create</button>
+        <button type="submit" data-testid="create-blog-button">
+          Create
+        </button>
       </form>
     </div>
   );

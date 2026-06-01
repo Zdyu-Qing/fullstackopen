@@ -12,6 +12,7 @@ export default function Notification() {
   return (
     <div
       className={`mx-4 py-4 px-2.5 rounded-sm text-white ${backgroundClass}`}
+      data-testid="notification"
     >
       {message}
     </div>

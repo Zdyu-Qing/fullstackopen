@@ -21,6 +21,7 @@ export default function RegisterPage() {
               name="username"
               required
               defaultValue={state.values.username}
+              data-testid="username-error"
             />
           </label>
           {state.errors.username && (
@@ -60,13 +61,16 @@ export default function RegisterPage() {
               name="passwordConfirm"
               required
               defaultValue={state.values.passwordConfirm}
+              data-testid="passwordConfirm-error"
             />
           </label>
           {state.errors.passwordConfirm && (
             <p className="text-red-500">{state.errors.passwordConfirm}</p>
           )}
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" data-testid="register-button">
+          Register
+        </button>
       </form>
     </div>
   );

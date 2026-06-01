@@ -1,10 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import bcrypt from 'bcryptjs';
-import { db } from '@/db';
-import { users } from '@/db/schema';
-import { updateApiToken, usernameExists } from '@/app/services/users';
+import { addUser, updateApiToken, usernameExists } from '@/app/services/users';
 import { revalidatePath } from 'next/cache';
 
 type FormValues = {
@@ -45,9 +42,7 @@ export const registerUser = async (
     return { errors, values: { username, name, password, passwordConfirm } };
   }
 
-  const passwordHash = await bcrypt.hash(password, 10);
-
-  await db.insert(users).values({ username, name, passwordHash });
+  await addUser(username, name, password);
 
   redirect('/login');
 };

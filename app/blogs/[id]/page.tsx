@@ -24,9 +24,11 @@ export default async function BlogPage({
       : false;
 
   return (
-    <div className="card">
-      <h1>{blog.title}</h1>
-      <p className="text-gray-600 mt-0">by {blog.author}</p>
+    <div className="card" data-testid="blog-detail">
+      <h1 data-testid="blog-title">{blog.title}</h1>
+      <p className="text-gray-600 mt-0" data-testid="blog-author">
+        by {blog.author}
+      </p>
       <div className="flex flex-row items-center my-3 gap-3">
         <p className="m-0">likes: {blog.likes}</p>
         <form className="w-fit" action={incrementLikes}>
@@ -36,7 +38,11 @@ export default async function BlogPage({
         {showAddToReadingListButton && (
           <form className="w-fit" action={addBlogToReadingListAction}>
             <input name="id" value={blog.id} hidden readOnly />
-            <button className="bg-green-600" type="submit">
+            <button
+              className="bg-green-600"
+              type="submit"
+              data-testid="add-to-reading-list-button"
+            >
               add to reading list
             </button>
           </form>

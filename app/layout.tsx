@@ -16,7 +16,7 @@ export default function RootLayout({
           <NotificationProvider>
             <NavBar />
             <Notification />
-            <div className="flex flex-col items-center">{children}</div>
+            <div className="flex flex-col items-center mx-4">{children}</div>
           </NotificationProvider>
         </AuthSessionProvider>
       </body>

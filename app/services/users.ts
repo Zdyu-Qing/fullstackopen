@@ -1,6 +1,7 @@
 import { getCurrentUser } from '@/app/services/session';
 import { db } from '@/db';
 import { users } from '@/db/schema';
+import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
 
 export const getUsers = async () => {
@@ -62,4 +63,16 @@ export const getCurrentUserWithReadingList = async () => {
       },
     },
   });
+};
+
+export const addUser = async (
+  username: string,
+  name: string,
+  password: string,
+) => {
+  const passwordHash = await bcrypt.hash(password, 10);
+  return await db
+    .insert(users)
+    .values({ username, name, passwordHash })
+    .returning({ id: users.id, username: users.username, name: users.name });
 };
